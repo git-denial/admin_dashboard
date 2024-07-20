@@ -34,7 +34,7 @@ function SidebarSelection() {
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               
               <Link
-                href="#"
+                href="/users"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "users"  ? `bg-muted text-primary` : `text-muted-foreground`}  transition-all hover:text-primary`}
               >
                 <User className="h-4 w-4" />
