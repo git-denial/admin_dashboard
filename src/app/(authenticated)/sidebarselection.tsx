@@ -13,7 +13,13 @@ import {
   ShoppingCart,
   Users,
   BarChart,
-  User
+  User,
+  LucideUserX2,
+  Star,
+  UserCheck,
+  UserCheck2,
+  PlusCircle,
+  HeartPulse
 } from "lucide-react"
 
 import { usePathname } from "next/navigation"
@@ -26,14 +32,7 @@ function SidebarSelection() {
   return (
     <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
-                href="#"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
-                
-              >
-                <Home className="h-4 w-4" />
-                Home
-              </Link>
+              
               <Link
                 href="#"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "users"  ? `bg-muted text-primary` : `text-muted-foreground`}  transition-all hover:text-primary`}
@@ -44,27 +43,31 @@ function SidebarSelection() {
                   6
                 </Badge> */}
               </Link>
+
               <Link
                 href="#"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "products" ? `bg-muted text-primary` : `text-muted-foreground`} transition-all hover:text-primary`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "cardiologists" ? `bg-muted text-primary` : `text-muted-foreground`} transition-all hover:text-primary`}
               >
-                <Package className="h-4 w-4" />
-                Products
+                <HeartPulse className="h-4 w-4" />
+                Cardiologists
               </Link>
+
               <Link
                 href="#"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "customers" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "relatives" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
               >
                 <Users className="h-4 w-4" />
-                Customers
+                Relatives
               </Link>
+
               <Link
                 href="#"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "analytics" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "admins" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
               >
-                <LineChart className="h-4 w-4" />
-                Analytics
+                <UserCheck2 className="h-4 w-4" />
+                Admins
               </Link>
+              
             </nav>
           </div>
   )
