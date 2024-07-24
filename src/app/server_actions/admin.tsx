@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/app/lib/prisma";
-import {users as User} from "@prisma/client"
+import {administrators as Admin} from "@prisma/client"
 import crypto from 'crypto'
 
 function generateSalt() {
@@ -11,9 +11,9 @@ function hashSHA1(str: string) {
     return crypto.createHash('sha1').update(str).digest('hex')
 }
 
-const model = prisma.users
+const model = prisma.administrators
 
-export async function changePassword(id: number, body: any): Promise<User> {
+export async function changePassword(id: number, body: any): Promise<Admin> {
 
     console.log(body)
 
@@ -29,11 +29,11 @@ export async function changePassword(id: number, body: any): Promise<User> {
     })
 }
 
-export async function deleteUser(id:number) : Promise<User>  {
+export async function deleteUser(id:number) : Promise<Admin>  {
     return await model.delete({where:{id}})
 }
 
-export async function updateUser(id:number, body:any) : Promise<User>  {
+export async function updateUser(id:number, body:any) : Promise<Admin>  {
     
     body.birth_date = body.birth_date ? new Date(body.birth_date) : undefined
     body.password = undefined
