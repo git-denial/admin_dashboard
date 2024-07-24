@@ -1,7 +1,8 @@
 
 import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
-import DataTable from "./_component/dataTable"
+import DataTable from "@/components/ui/dataTable"
+import { UserDataTableColumns } from "./dataTableColumn"
 
 
 
@@ -31,7 +32,7 @@ export default async function UsersPage() {
               <Button className="mt-4">Add User</Button>
             </div>
             :
-            <DataTable data={users}/>
+            <DataTable data={users} columns={UserDataTableColumns}/>
         }
 
       </div>
