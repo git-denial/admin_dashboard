@@ -33,11 +33,15 @@ import {
 import { Separator } from "@/components/ui/separator"
 import UserApi from "@/app/api/UserApi"
 import { users as User } from "@prisma/client"
+import ChangePasswordDialog from "./changePasswordDialog"
+import EditDialog from "./EditDialog"
+import { DeleteUserDialog } from "./deleteUserDialog"
 
-export default async function UserDetail({params, user}: {params:{id:string}, user:User}) {
+export default async function UserDetail({params}: {params:{id:string}}) {
 
   
-  const userDetail = await UserApi.getById(parseInt(params.id))
+  const userDetail = JSON.parse(JSON.stringify(await UserApi.getById(parseInt(params.id))))
+  
   
   if(userDetail)
   return (
@@ -71,11 +75,22 @@ export default async function UserDetail({params, user}: {params:{id:string}, us
                 <span className="sr-only">More</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Change Password</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuContent className="w-10" align="end">
+            <EditDialog
+            child={<Button className="w-full bg-transparent text-black text-[12px] border-primary hover:bg-transparent/5">Edit</Button>}
+            user={userDetail}
+            />
+            <ChangePasswordDialog 
+            child={<Button className="w-full bg-transparent text-black text-[12px] border-primary hover:bg-transparent/5">Change password</Button>}
+            user={userDetail}
+            />
+            <DeleteUserDialog
+            child={<Button className="w-full bg-transparent text-black text-[12px] border-primary hover:bg-destructive hover:text-white">Delete</Button>}
+            text={{head:"Are you sure?", body:"You are about to delete this user"}}
+            id={userDetail.id}            
+            />
+            
+              
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
