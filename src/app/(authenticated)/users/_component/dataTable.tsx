@@ -44,7 +44,7 @@ import UserApi from "@/app/api/UserApi"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
-import { deleteUser } from "@/app/server_actions/user/delete"
+import { deleteUser } from "@/app/server_actions/user"
 
 
 export const columns: ColumnDef<User>[] = [
