@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import {
   ChevronLeft,
@@ -31,11 +31,15 @@ import {
   PaginationItem,
 } from "@/components/ui/pagination"
 import { Separator } from "@/components/ui/separator"
+import UserApi from "@/app/api/UserApi"
+import { users as User } from "@prisma/client"
 
-export default function UserDetail({params}: {params:{id:string}}) {
+export default async function UserDetail({params, user}: {params:{id:string}, user:User}) {
 
-    //const userDetail = await getData()
-    
+  
+  const userDetail = await UserApi.getById(parseInt(params.id))
+  
+  if(userDetail)
   return (
     <Card className="overflow-hidden w-1/3 m-auto">
       <CardHeader className="flex flex-row items-start bg-muted/50">
@@ -51,7 +55,7 @@ export default function UserDetail({params}: {params:{id:string}}) {
               <span className="sr-only">Copy ID</span>
             </Button>
           </CardTitle>
-          <CardDescription>Created: November 23, 2023</CardDescription>
+          <CardDescription>Created: {new Date(userDetail.created_at).toDateString()}</CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
           {/* <Button size="sm" variant="outline" className="h-8 gap-1">
@@ -84,35 +88,35 @@ export default function UserDetail({params}: {params:{id:string}}) {
               <span className="text-muted-foreground">
                 Full Name
               </span>
-              <span>$250.00</span>
+              <span>{userDetail.full_name}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">
                 Birth Date
               </span>
-              <span>$49.00</span>
+              <span>{String(userDetail.birth_date).slice(0,10)}</span>
             </li>
           </ul>
           <Separator className="my-2" />
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Weight</span>
-              <span>$299.00</span>
+              <span>{userDetail.weight+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Height</span>
-              <span>$5.00</span>
+              <span>{userDetail.height+''}</span>
             </li>
           </ul>
         <Separator className="my-2" />
         <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Phone Number</span>
-              <span>$299.00</span>
+              <span>{userDetail.phone_num+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Email</span>
-              <span>$5.00</span>
+              <span>{userDetail.email}</span>
             </li>
           </ul>
         </div>
@@ -139,6 +143,6 @@ export default function UserDetail({params}: {params:{id:string}}) {
           </PaginationContent>
         </Pagination>
       </CardFooter> */}
-    </Card>
-  )
+    </Card>    
+  )  
 }
