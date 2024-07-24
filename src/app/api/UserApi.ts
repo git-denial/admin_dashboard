@@ -1,12 +1,14 @@
 import prisma from "@/app/lib/prisma";
 import {users as User} from "@prisma/client"
 
+const model = prisma.users
+
 async function getAll() : Promise<User[]>  {
-    return await prisma.users.findMany()
+    return await model.findMany()
 }
 
 async function getById(id:number) : Promise<User|null>  {
-    return await prisma.users.findUnique({where:{id}})
+    return await model.findUnique({where:{id}})
 }
 
 export default{
