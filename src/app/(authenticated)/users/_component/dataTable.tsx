@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  
+
 } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
@@ -36,9 +36,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {users as User} from "@prisma/client"
-import { redirect } from "next/navigation"
+import { users as User } from "@prisma/client"
 import Link from "next/link"
+import AlertDialogue from "@/components/ui/AlertDialog"
+import { useState } from "react"
+import UserApi from "@/app/api/UserApi"
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
+import { deleteUser } from "@/app/server_actions/user/delete"
 
 
 export const columns: ColumnDef<User>[] = [
@@ -63,6 +69,21 @@ export const columns: ColumnDef<User>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div>{row.getValue("id")}</div>,
   },
   {
     accessorKey: "full_name",
@@ -107,7 +128,7 @@ export const columns: ColumnDef<User>[] = [
         </Button>
       )
     },
-    
+
     cell: ({ row }) => <div>{String(row.getValue("birth_date")).slice(0, 10)}</div>,
   },
   {
@@ -150,36 +171,95 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original
+      const [open, setOpen] = useState(false)
+      const { toast } = useToast()
+      const router = useRouter()
+      
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
-            <Link href={`/users/${user.id}`}>
-            <DropdownMenuItem>
-              View detail
-            </DropdownMenuItem>
-            </Link>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">Delete</DropdownMenuItem>            
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+        
+        
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+              <Link href={`/users/${user.id}`}>
+                <DropdownMenuItem>
+                  View detail
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+              {/* {AlertDialogue(<DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">Delete</DropdownMenuItem>, "a", "b", ()=>alert('a'))} */}
+              {/* <AlertDialogue 
+            child={<DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">Delete</DropdownMenuItem>}
+            headMsg={'Are you sure'}
+            bodyMsg={'Are you really sure'}
+            /> */}
+
+              <DropdownMenuItem onClick={() => setOpen(true)} className="text-destructive focus:bg-destructive focus:text-white">Delete</DropdownMenuItem>
+
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <AlertDialogue
+            opened={open}
+            onOpenChange={setOpen}
+            headMsg="Are you sure ?"
+            bodyMsg={`You are about to delete user with id ${user.id}`}
+            continueFunction={async() => {
+              try {
+                // const res = await fetch(`http://localhost:3000/api/user/${user.id}`,
+                //   {
+                //     method: 'DELETE', 
+                //     headers:{'Content-Type': 'application/json'}, 
+                //     body:JSON.stringify({})
+                //   })
+
+                //   const data = await res.json()
+
+                let data = await deleteUser(user.id)
+                
+                  console.log(data) 
+                  toast({
+                    title: "Success",
+                    description: `User with id ${data.id} deleted`,
+                    // action: <ToastAction altText="Try again">Try again</ToastAction>,
+                  })
+
+                  router.refresh()
+
+              } catch (error) {
+                setOpen(false)
+                toast({
+                  variant: "destructive",
+                  title: "Uh oh! Something went wrong.",
+                  description: String(error),
+                  // action: <ToastAction altText="Try again">Try again</ToastAction>,
+                })
+               
+              }
+              
+            }}
+          />
+        </>
+
+
       )
     },
   },
 ]
 
-export default function DataTable({data}: any) {
+export default function DataTable({ data }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({})  
 
   const table = useReactTable({
     data,
@@ -201,7 +281,7 @@ export default function DataTable({data}: any) {
   })
 
   return (
-    <div className="w-full mx-10 mb-60">
+    <div className="w-full mx-10 mb-60">   
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
@@ -227,7 +307,7 @@ export default function DataTable({data}: any) {
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value:any) =>
+                    onCheckedChange={(value: any) =>
                       column.toggleVisibility(!!value)
                     }
                   >
@@ -249,9 +329,9 @@ export default function DataTable({data}: any) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}
@@ -263,7 +343,7 @@ export default function DataTable({data}: any) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}                  
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -312,6 +392,7 @@ export default function DataTable({data}: any) {
           </Button>
         </div>
       </div>
+
     </div>
   )
 }
