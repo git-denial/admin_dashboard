@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation"
 import { deleteUser } from "@/app/server_actions/user"
 
 
+
 export const UserDataTableColumns: ColumnDef<User>[] = [
   {
     id: "select",
@@ -75,6 +76,7 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("full_name")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     accessorKey: "email",
@@ -90,6 +92,7 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("email")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     accessorKey: "birth_date",
@@ -106,6 +109,8 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
     },
 
     cell: ({ row }) => <div>{String(row.getValue("birth_date")).slice(0, 10)}</div>,
+    filterFn: 'myCustomFilter' as any
+    
   },
   {
     accessorKey: "weight",
@@ -121,6 +126,7 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("weight")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     accessorKey: "height",
@@ -136,11 +142,13 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("height")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     accessorKey: "phone_num",
     header: () => "Phone Number",
     cell: ({ row }) => <div>{row.getValue("phone_num")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     id: "actions",
