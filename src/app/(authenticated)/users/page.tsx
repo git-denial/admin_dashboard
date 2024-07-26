@@ -9,7 +9,13 @@ import { UserDataTableColumns } from "./dataTableColumn"
 
 export default async function UsersPage() {
 
-  const users = JSON.parse(JSON.stringify((await UserApi.getAll())))
+  let users = JSON.parse(JSON.stringify((await UserApi.getAll())))
+  //process nullish value to empty string so that it can be search globally within the datatable
+  users  = users.map((u:any)=> {
+    for(let o of Object.keys(u)) if(u[o] == null) u[o] = ''
+    return u
+  })
+  
 
   return (
     <>

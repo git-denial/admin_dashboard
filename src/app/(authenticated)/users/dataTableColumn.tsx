@@ -208,8 +208,7 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
                 //   const data = await res.json()
 
                 let data = await deleteUser(user.id)
-                
-                  console.log(data) 
+                                  
                   toast({
                     title: "Success",
                     description: `User with id ${data.id} deleted`,

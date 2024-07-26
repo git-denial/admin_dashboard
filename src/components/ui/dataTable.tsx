@@ -35,6 +35,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Switch } from "./switch"
+import { Label } from "./label"
 
 const SEARCH_MODE = {
     START: 'START',
@@ -50,6 +52,10 @@ export default function DataTable({ data, columns }: any) {
   const [columnFiltersBy, setColumnFiltersBy] = React.useState("")
 
   const [searchMode, setSearchMode] = React.useState(SEARCH_MODE.START)
+  const [globalSearchMode, setGlobalSearchMode] = React.useState(false)
+
+  const [globalFilter, setGlobalFilter] = React.useState('')
+
 
   const table = useReactTable({
     data,
@@ -67,12 +73,13 @@ export default function DataTable({ data, columns }: any) {
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter
     },
     filterFns: {
       myCustomFilter: (row, columnId, filterValue)=>  {
         let value = row.getValue<number | string>(columnId)
         
-        if(value == null) return false
+        if(value == null || value === '') return false
 
         if(columnId === 'birth_date') value = new Date(value).toISOString().substring(0, 10)
   
@@ -82,38 +89,54 @@ export default function DataTable({ data, columns }: any) {
         
       }
     },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: 'myCustomFilter' as any,
   })
+
+  React.useEffect(()=>{
+    table.resetColumnFilters()
+    table.resetGlobalFilter()
+  },[globalSearchMode, columnFiltersBy])
 
   return (
     <div className="w-full mx-10 mb-60">   
       <div className="flex items-center py-4">
+
+      <div className="flex items-center space-x-2 mr-2">
+        <Label>Global column search</Label>
+      <Switch checked={globalSearchMode} onCheckedChange={()=>setGlobalSearchMode(!globalSearchMode)}/>
+    </div>
+
+    {globalSearchMode? null : 
+    <DropdownMenu>
+    <Label>Filter by</Label>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="ml-2 mr-2">
+          {columnFiltersBy} <ChevronDown className="ml-2 h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {table
+          .getAllColumns()
+          .filter((column) => column.getCanHide())
+          .map((column) => {
+            return (
+              <DropdownMenuCheckboxItem
+                key={column.id+'filter'}
+                className="capitalize"
+                checked={columnFiltersBy === column.id}
+                onCheckedChange={(value: any) => setColumnFiltersBy(column.id)}
+              >
+                {column.id}
+              </DropdownMenuCheckboxItem>
+            )
+          })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+    }
+        
         <DropdownMenu>
-        Filter by
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-2 mr-2">
-              {columnFiltersBy} <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id+'filter'}
-                    className="capitalize"
-                    checked={columnFiltersBy === column.id}
-                    onCheckedChange={(value: any) => setColumnFiltersBy(column.id)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-        Search mode
+        <Label>Search mode</Label>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-2 mr-2">
               {searchMode} <ChevronDown className="ml-2 h-4 w-4" />
@@ -135,12 +158,13 @@ export default function DataTable({ data, columns }: any) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+      
         {/* {<p>{JSON.stringify(table.getColumn(columnFiltersBy)?.getFilterValue())}</p>} */}
         <Input
-          placeholder={`Filter ${columnFiltersBy}...`}
-          value={(table.getColumn(columnFiltersBy)?.getFilterValue() as string) ?? ""}
+          placeholder={`Filter ${ globalSearchMode ? '' : columnFiltersBy}...`}
+          value={( globalSearchMode? globalFilter : table.getColumn(columnFiltersBy)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn(columnFiltersBy)?.setFilterValue(event.target.value)
+            globalSearchMode? setGlobalFilter(event.target.value) : table.getColumn(columnFiltersBy)?.setFilterValue(event.target.value)
           } 
           className="max-w-sm ml-2"
         />
