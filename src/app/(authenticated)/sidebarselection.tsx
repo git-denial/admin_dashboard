@@ -45,7 +45,7 @@ function SidebarSelection() {
               </Link>
 
               <Link
-                href="#"
+                href="cardiologists"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "cardiologists" ? `bg-muted text-primary` : `text-muted-foreground`} transition-all hover:text-primary`}
               >
                 <HeartPulse className="h-4 w-4" />
@@ -53,7 +53,7 @@ function SidebarSelection() {
               </Link>
 
               <Link
-                href="#"
+                href="relatives"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "relatives" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
               >
                 <Users className="h-4 w-4" />
@@ -61,7 +61,7 @@ function SidebarSelection() {
               </Link>
 
               <Link
-                href="#"
+                href="admins"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "admins" ? `bg-muted text-primary` : `text-muted-foreground`} text-muted-foreground transition-all hover:text-primary`}
               >
                 <UserCheck2 className="h-4 w-4" />
