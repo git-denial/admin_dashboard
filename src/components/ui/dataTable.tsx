@@ -45,7 +45,7 @@ const SEARCH_MODE = {
     EVERYWHERE: 'EVERYWHERE'
 }
 
-export default function DataTable({ data, columns }: any) {
+export default function DataTable({ data, columns, createPageHref }: any) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -202,7 +202,7 @@ export default function DataTable({ data, columns }: any) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-      <Link href="/users/create"><Button className="ml-8">Create</Button></Link>
+      <Link href={createPageHref}><Button className="ml-8">Create</Button></Link>
       </div>
       <div className="rounded-md border">
         <Table>
