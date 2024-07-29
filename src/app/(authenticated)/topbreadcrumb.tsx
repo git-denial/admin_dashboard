@@ -14,17 +14,17 @@ function Topbreadcrumb() {
         <BreadcrumbList>
           {pathnames.map((p, i) =>
 
-            <>
-              <BreadcrumbItem>
+            <React.Fragment key={`frag${i}`}>
+              <BreadcrumbItem key={`bcitem${i}`}>
                 {
                   pathnames[pathnames.length - 1] === p ?
-                    <BreadcrumbPage>{p}</BreadcrumbPage>
+                    <BreadcrumbPage key={`bcpage${i}`}>{p}</BreadcrumbPage>
                     :
-                    <BreadcrumbLink href={`${pathnames.slice(0, i + 1).join('/')}`}>{p}</BreadcrumbLink>
+                    <BreadcrumbLink key={`bclink${i}`} href={`${pathnames.slice(0, i + 1).join('/')}`}>{p}</BreadcrumbLink>
                 }
               </BreadcrumbItem>
-              {i === 0 ? null : <BreadcrumbSeparator />}
-            </>
+              {i === 0 ? null : <BreadcrumbSeparator key={`bcsepara${i}`} />}
+            </React.Fragment>
 
 
           )}
