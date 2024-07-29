@@ -1,5 +1,6 @@
-import Link from "next/link"
+"use client"
 
+import {z} from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,8 +11,87 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { createUser } from "@/app/server_actions/user"
+import { toast } from "@/components/ui/use-toast"
+import { User } from "lucide-react"
+import SpinnerLoading from "@/components/ui/spinnerloading"
+
+const FormSchema = z.object({
+  full_name: z.string().min(2, { message: "Full Name must be at least 2 characters." }),
+  email: z.string().min(2, { message: "Email must be at least 2 characters." }),
+  password: z.string().min(8),
+  confirm_password: z.string(),
+  birth_date: z.string().optional(),
+  weight: z.coerce.number().optional(),
+  height: z.coerce.number().optional(),
+  phone_num: z.string().optional(),
+}).superRefine(({ confirm_password, password }, ctx) => {
+  if (confirm_password !== password) {
+    ctx.addIssue({
+      code: "custom",
+      message: "The passwords did not match",
+      path: ['confirm_password']
+    });
+  }
+});
 
 export default function CreateUser() {
+
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    
+  })
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+
+    // toast({
+    //   title: "You submitted the following values:",
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // })
+
+    try {
+
+      toast({
+        title: <div> <SpinnerLoading className="text-primary my-0 mr-2 display: inline"/> Creating</div> as any
+      })
+
+      // await createUser(data)
+
+      toast({
+        title: "User created"
+      })
+
+      router.push('/users')
+      router.refresh()
+
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: String(error),
+
+      })
+    }
+  }
+  
   return (
     <>
     <div className="flex items-center">
@@ -29,68 +109,103 @@ export default function CreateUser() {
         
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
+        <div>
 
-        <div className="grid gap-2">
-            <Label>Full Name</Label>
-            <Input
-              id="fullname"
-              type="text"
-              placeholder="Doe John"
-              required
-            />
-          </div>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+                control={form.control}
+                name="full_name"
+                render={({ field }) => (
 
-          <div className="grid gap-2">
-            <Label>Birth Date</Label>
-            <Input
-              id="birthdate"
-              type="date"
-              placeholder=""
-              required
-            />
-          </div>
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label>Weight</Label>
-              <Input id="weight" type="number" required />
-            </div>
-            <div className="grid gap-2">
-              <Label>Height</Label>
-              <Input type="number" id="height"  required />
-            </div>
-          </div>
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="email"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="weight"
+                render={({ field }) => (
+
+                  <FormItem>
+                    <FormLabel>Weight</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="height"
+                render={({ field }) => (
+
+                  <FormItem>
+                    <FormLabel>Height</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              </div>
+              
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirm_password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password"/>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
 
-          <div className="grid gap-2">
-            <Label>Phone Number</Label>
-            <Input
-              id="phonum"
-              type="tel" 
-              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              required
-            />
-          </div>
+              <Button type="submit" className="my-4">Create</Button>
+            </form>
+          </Form>
 
-          
-          
-          <div className="grid gap-2">
-            <Label>Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label>Password</Label>
-            <Input id="password" type="password" />
-          </div>
-          <Button type="submit" className="w-full">
-            Create
-          </Button>
+        
           
         </div>
         
