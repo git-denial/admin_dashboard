@@ -39,7 +39,7 @@ export default async function UsersPage() {
               <Link href="/users/create"><Button className="mt-4">Create User</Button></Link>
             </div>
             :
-            <DataTable data={users} columns={UserDataTableColumns}/>
+            <DataTable data={users} columns={UserDataTableColumns} createPageHref={'/users/create'}/>
         }
 
       </div>
