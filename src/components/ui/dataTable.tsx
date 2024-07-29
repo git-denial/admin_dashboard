@@ -51,6 +51,11 @@ export default function DataTable({ data, columns }: any) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnFiltersBy, setColumnFiltersBy] = React.useState("")
 
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0, //initial page index
+    pageSize: 10, //default page size
+    });
+
   const [searchMode, setSearchMode] = React.useState(SEARCH_MODE.START)
   const [globalSearchMode, setGlobalSearchMode] = React.useState(false)
 
@@ -73,6 +78,7 @@ export default function DataTable({ data, columns }: any) {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
       globalFilter
     },
     filterFns: {
@@ -89,6 +95,7 @@ export default function DataTable({ data, columns }: any) {
         
       }
     },
+    onPaginationChange: setPagination,
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: 'myCustomFilter' as any,
   })
