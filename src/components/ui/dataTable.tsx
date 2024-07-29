@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/table"
 import { Switch } from "./switch"
 import { Label } from "./label"
+import Link from "next/link"
 
 const SEARCH_MODE = {
     START: 'START',
@@ -201,6 +202,7 @@ export default function DataTable({ data, columns }: any) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+      <Link href="/users/create"><Button className="ml-8">Create</Button></Link>
       </div>
       <div className="rounded-md border">
         <Table>

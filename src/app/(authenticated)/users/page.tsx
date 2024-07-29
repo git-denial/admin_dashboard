@@ -3,6 +3,7 @@ import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/dataTable"
 import { UserDataTableColumns } from "./dataTableColumn"
+import Link from "next/link"
 
 
 
@@ -35,7 +36,7 @@ export default async function UsersPage() {
               <p className="text-sm text-muted-foreground">
                 Table of users will appear once there is a user
               </p>
-              <Button className="mt-4">Add User</Button>
+              <Link href="/users/create"><Button className="mt-4">Create User</Button></Link>
             </div>
             :
             <DataTable data={users} columns={UserDataTableColumns}/>
