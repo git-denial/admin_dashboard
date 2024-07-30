@@ -23,7 +23,7 @@ function Topbreadcrumb() {
                     <BreadcrumbLink key={`bclink${i}`} href={`${pathnames.slice(0, i + 1).join('/')}`}>{p}</BreadcrumbLink>
                 }
               </BreadcrumbItem>
-              {i === 0 ? null : <BreadcrumbSeparator key={`bcsepara${i}`} />}
+              {i === 0 || i === pathnames.length - 1? null : <BreadcrumbSeparator key={`bcsepara${i}`} />}
             </React.Fragment>
 
 
