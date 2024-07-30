@@ -11,7 +11,12 @@ async function getById(id:number) : Promise<Cardiologist|null>  {
     return await model.findUnique({where:{id}})
 }
 
+async function getByEmail(email:string) : Promise<Cardiologist|null>  {
+    return await model.findUnique({where:{email}})
+}
+
 export default{
     getAll,
-    getById
+    getById,
+    getByEmail
 }

@@ -11,7 +11,13 @@ async function getById(id:number) : Promise<User|null>  {
     return await model.findUnique({where:{id}})
 }
 
+async function getByEmail(email:string) : Promise<User|null>  {
+    return await model.findUnique({where:{email}})
+}
+
+
 export default{
     getAll,
-    getById
+    getById,
+    getByEmail
 }
