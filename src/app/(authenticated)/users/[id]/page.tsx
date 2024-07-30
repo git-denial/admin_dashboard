@@ -109,25 +109,25 @@ export default async function UserDetail({params}: {params:{id:string}}) {
               <span className="text-muted-foreground">
                 Birth Date
               </span>
-              <span>{String(userDetail.birth_date).slice(0,10)}</span>
+              <span>{userDetail.birth_date == null ? '-' :  String(userDetail.birth_date).slice(0,10)}</span>
             </li>
           </ul>
           <Separator className="my-2" />
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Weight</span>
-              <span>{userDetail.weight+''}</span>
+              <span>{userDetail.weight == null ? '-' :  userDetail.weight+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Height</span>
-              <span>{userDetail.height+''}</span>
+              <span>{ userDetail.height == null ? '-' :  userDetail.height+''}</span>
             </li>
           </ul>
         <Separator className="my-2" />
         <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Phone Number</span>
-              <span>{userDetail.phone_num+''}</span>
+              <span>{ userDetail.phone_num == null ? '-' : userDetail.phone_num+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Email</span>
