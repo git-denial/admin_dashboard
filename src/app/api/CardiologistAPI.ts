@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import {cardiologists as Cardiologist} from "@prisma/client"
 
 const model = prisma.cardiologists

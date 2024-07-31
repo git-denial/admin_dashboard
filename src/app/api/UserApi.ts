@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import {users as User} from "@prisma/client"
 
 const model = prisma.users

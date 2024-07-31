@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import {administrators as Admin} from "@prisma/client"
 
 const model = prisma.administrators
