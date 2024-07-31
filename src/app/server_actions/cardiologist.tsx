@@ -1,5 +1,5 @@
 "use server"
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {cardiologists as Cardiologist} from "@prisma/client"

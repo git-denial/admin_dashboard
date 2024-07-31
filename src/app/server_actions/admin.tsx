@@ -1,5 +1,5 @@
 "use server"
-import prisma from "@/app/lib/prisma";
+import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {administrators as Admin} from "@prisma/client"
