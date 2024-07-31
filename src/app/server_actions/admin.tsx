@@ -1,24 +1,27 @@
 "use server"
 import prisma from "@/app/lib/prisma";
+import cryptoUtil from "@/utils/cryptoUtil";
+import generalUtil from "@/utils/generalUtil";
 import {administrators as Admin} from "@prisma/client"
-import crypto from 'crypto'
-
-function generateSalt() {
-    return crypto.randomBytes(20).toString('hex')
-}
-
-function hashSHA1(str: string) {
-    return crypto.createHash('sha1').update(str).digest('hex')
-}
 
 const model = prisma.administrators
 
-export async function changePassword(id: number, body: any): Promise<Admin> {
+function props(){
+    let obj: Admin = {
+        id: 0,
+        username: "",
+        password: "",
+        salt: "",
+        created_at: new Date(),
+        modified_at: null
+    }
+    return Object.keys(obj)   
+}
 
-    console.log(body)
+export async function changePassword(id: number, body: any): Promise<Admin> {    
 
-    let newSalt = generateSalt();
-    let newProcessedPassword = hashSHA1(body.password + newSalt);
+    let newSalt = cryptoUtil.generateSalt();
+    let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
 
     console.log(newSalt)
     console.log(newProcessedPassword)
@@ -29,18 +32,41 @@ export async function changePassword(id: number, body: any): Promise<Admin> {
     })
 }
 
-export async function deleteUser(id:number) : Promise<Admin>  {
+export async function deleteAdmin(id:number) : Promise<Admin>  {
     return await model.delete({where:{id}})
 }
 
-export async function updateUser(id:number, body:any) : Promise<Admin>  {
+export async function updateAdmin(id:number, body:any) : Promise<Admin>  {
     
     body.birth_date = body.birth_date ? new Date(body.birth_date) : undefined
-    body.password = undefined
-    body.salt = undefined
+    
+    delete body.password
+    delete body.salt
 
     return await model.update({
         data:{...body}, 
         where:{id}
+    })
+}
+
+export async function createAdmin(body:any) : Promise<Admin>  {
+
+    generalUtil.removeUnknownProps(body, props())
+    
+    let salt = cryptoUtil.generateSalt()
+    
+    const admin: Admin = {
+        ...body,
+        birth_date: body.birth_date ? new Date(body.birth_date) : undefined,
+        salt: salt,
+        password: cryptoUtil.hashPasswordWithSalt(body.password, salt),
+        activation_token: cryptoUtil.generateRandomString(16),
+        activation_token_expired_at: generalUtil.nowPlusDay(1),
+        created_at: new Date()
+    }
+    
+    
+    return await model.create({
+        data:{...admin}
     })
 }
