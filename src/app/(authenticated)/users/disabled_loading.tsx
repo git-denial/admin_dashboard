@@ -1,5 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
+/*
+TODO: Cause too much rerender in dataTable.tsx. Apparently, had some conflict with actions column cells of the data table
+
+Adding these 2 options to useReactTable constructor fixes the issue as well
+// autoResetPageIndex: false,
+// autoResetExpanded: false,
+
+*/
 export default function Loading() {
     // You can add any UI inside Loading, including a Skeleton.
     return (

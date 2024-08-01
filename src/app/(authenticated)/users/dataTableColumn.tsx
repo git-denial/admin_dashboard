@@ -153,6 +153,10 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
   {
     id: "actions",
     enableHiding: false,
+    enableSorting: false,
+    enableColumnFilter:false,
+    enableGlobalFilter:false,
+
     cell: ({ row }) => {
       const user = row.original
       const [open, setOpen] = useState(false)

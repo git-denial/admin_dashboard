@@ -99,6 +99,8 @@ export default function DataTable({ data, columns, createPageHref }: any) {
     onPaginationChange: setPagination,
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: 'myCustomFilter' as any,
+    // autoResetPageIndex: false,
+    // autoResetExpanded: false,
   })
 
   React.useEffect(()=>{
