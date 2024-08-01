@@ -18,10 +18,10 @@ function props(){
     return Object.keys(obj)   
 }
 
-export async function changePassword(id: number, body: any): Promise<Admin> {    
+export async function changePassword(id: number, password: string): Promise<Admin> {    
 
     let newSalt = cryptoUtil.generateSalt();
-    let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
+    let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(password, newSalt);
 
     return await model.update({
         data: { password: newProcessedPassword, salt: newSalt},
@@ -35,13 +35,24 @@ export async function deleteAdmin(id:number) : Promise<Admin>  {
 
 export async function updateAdmin(id:number, body:any) : Promise<Admin>  {
     
-    body.birth_date = body.birth_date ? new Date(body.birth_date) : undefined
-    
+    delete body.username
     delete body.password
     delete body.salt
 
     return await model.update({
         data:{...body}, 
+        where:{id}
+    })
+}
+
+export async function changeUsername(id:number, username:string){
+    
+    
+    if((await model.findUnique({where:{username}}))?.id) return {error: "Username already exist"}    
+    
+
+    return await model.update({
+        data:{username}, 
         where:{id}
     })
 }

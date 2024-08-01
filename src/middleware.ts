@@ -1,8 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { verifyAuth } from '@/lib/auth'
-import { cookies } from 'next/headers';
 import { AUTH_TOKEN } from './lib/constants';
-import { redirect } from 'next/navigation';
 
 export const config = {
     matcher: [

@@ -38,3 +38,16 @@ export async function generateJWToken(data:any) {
     .setExpirationTime('1h')
     .sign(new TextEncoder().encode(JWT_SECRET_KEY))
 }
+
+export async function decodeJWTToken(token:string){
+  
+  try {
+    const verified = await jwtVerify(token,new TextEncoder().encode(JWT_SECRET_KEY))
+    return verified.payload  
+
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+  
+}

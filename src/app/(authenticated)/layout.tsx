@@ -135,7 +135,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
             <DropdownMenuContent align="end" className="right-0">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <Link href="/settings"> <DropdownMenuItem>Settings</DropdownMenuItem> </Link>
               <DropdownMenuSeparator />
               <Link href="/logout"> <DropdownMenuItem>Logout</DropdownMenuItem> </Link>
             </DropdownMenuContent>
