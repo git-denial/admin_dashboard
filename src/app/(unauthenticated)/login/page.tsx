@@ -1,3 +1,4 @@
+import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -9,10 +10,24 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { redirect } from "next/navigation"
+
 
 export default function LoginForm() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
+      <form action={async(formData)=>{
+        "use server"
+
+        let email = formData.get("email") +''
+        let password = formData.get("password") +''
+
+        let result = await UserApi.login(email,password)
+
+        redirect('/users')
+
+      }}>
+        
 <Card className="flex flex-col justify-center items-center">
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
@@ -23,17 +38,18 @@ export default function LoginForm() {
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" type="email" name="email" placeholder="m@example.com" required />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" required />
+          <Input id="password" name="password" type="password" required />
         </div>
       </CardContent>
       <CardFooter>
         <Button className="w-full">Sign in</Button>
       </CardFooter>
     </Card>
+      </form>
 
     </div>
       )

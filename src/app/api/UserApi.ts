@@ -1,23 +1,50 @@
+import { AuthError, generateJWToken } from "@/lib/auth";
+import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
-import {users as User} from "@prisma/client"
+import cryptoUtil from "@/utils/cryptoUtil";
+import generalUtil from "@/utils/generalUtil";
+import { users as User } from "@prisma/client"
+import { SignJWT } from "jose";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 const model = prisma.users
 
-async function getAll() : Promise<User[]>  {
+async function getAll(): Promise<User[]> {
     return await model.findMany()
 }
 
-async function getById(id:number) : Promise<User|null>  {
-    return await model.findUnique({where:{id}})
+async function getById(id: number): Promise<User | null> {
+    return await model.findUnique({ where: { id } })
 }
 
-async function getByEmail(email:string) : Promise<User|null>  {
-    return await model.findUnique({where:{email}})
+async function getByEmail(email: string): Promise<User | null> {
+    return await model.findUnique({ where: { email } })
+}
+
+async function login(email: string, pass: string) {
+    let user = await model.findUnique({ where: { email } })
+
+    if (!user) throw new AuthError('Incorrect credentials')
+
+    let hashPass = cryptoUtil.hashPasswordWithSalt(pass, user.salt)
+
+    if (hashPass !== user?.password) throw new AuthError('Incorrect credentials')
+
+    let response:any = NextResponse.json(
+        { success: true },
+        { status: 200, headers: { "content-type": "application/json" } }
+    );
+
+    cookies().set(AUTH_TOKEN, await generateJWToken(user), {secure:true, httpOnly:true, maxAge: generalUtil.timeUnitInSeconds(1, 'hour')})
+
+    return response;
 }
 
 
-export default{
+export default {
     getAll,
     getById,
-    getByEmail
+    getByEmail,
+    login
 }
