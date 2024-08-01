@@ -36,11 +36,16 @@ import { users as User } from "@prisma/client"
 import ChangePasswordDialog from "./changePasswordDialog"
 import EditDialog from "./EditDialog"
 import { DeleteUserDialog } from "./deleteUserDialog"
+import { redirect } from "next/navigation"
+
 
 export default async function UserDetail({params}: {params:{id:string}}) {
 
-  
-  const userDetail = JSON.parse(JSON.stringify(await UserApi.getById(parseInt(params.id))))
+  let id = parseInt(params.id)
+
+  if(isNaN(id)) redirect('/users')
+
+  const userDetail = JSON.parse(JSON.stringify(await UserApi.getById(id)))
   
   
   if(userDetail)
