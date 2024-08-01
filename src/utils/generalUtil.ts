@@ -16,6 +16,12 @@ function clean(obj: any){
     return obj
 }
 
+function removeSensitiveDataFromObj(x:any){
+    const daprops = ['password', 'salt']
+
+    for(let xp of daprops) delete x[xp]
+}
+
 function removeUnknownProps(x:any, props:string[]){
     const daprops = props
     const xprop = Object.keys(x)
@@ -46,5 +52,6 @@ export default{
     nowPlusDay,
     clean,
     removeUnknownProps,
+    removeSensitiveDataFromObj,
     timeUnitInSeconds
 }

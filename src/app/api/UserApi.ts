@@ -30,13 +30,16 @@ async function login(email: string, pass: string) {
     let hashPass = cryptoUtil.hashPasswordWithSalt(pass, user.salt)
 
     if (hashPass !== user?.password) throw new AuthError('Incorrect credentials')
+        
+    generalUtil.removeSensitiveDataFromObj(user)
 
     let response:any = NextResponse.json(
         { success: true },
         { status: 200, headers: { "content-type": "application/json" } }
     );
 
-    cookies().set(AUTH_TOKEN, await generateJWToken(user), {secure:true, httpOnly:true, maxAge: generalUtil.timeUnitInSeconds(1, 'hour')})
+    cookies().set(AUTH_TOKEN, await generateJWToken({...user, type:'USER'}), {secure:true, httpOnly:true, maxAge: generalUtil.timeUnitInSeconds(1, 'hour')})
+
 
     return response;
 }

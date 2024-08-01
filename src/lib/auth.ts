@@ -37,6 +37,6 @@ export async function generateJWToken(data:any) {
     .setProtectedHeader({ alg: 'HS256' })
     .setJti(nanoid())
     .setIssuedAt()
-    .setExpirationTime('2h')
+    .setExpirationTime('1h')
     .sign(new TextEncoder().encode(JWT_SECRET_KEY))
 }
