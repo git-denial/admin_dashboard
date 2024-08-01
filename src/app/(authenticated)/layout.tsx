@@ -137,7 +137,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <Link href="/logout"> <DropdownMenuItem>Logout</DropdownMenuItem> </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

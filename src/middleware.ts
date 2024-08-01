@@ -1,5 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { verifyAuth } from '@/lib/auth'
+import { cookies } from 'next/headers';
+import { AUTH_TOKEN } from './lib/constants';
+import { redirect } from 'next/navigation';
 
 export const config = {
     matcher: [
@@ -20,6 +23,14 @@ const unauthenticatedRoutes = ['/login']
 export async function middleware(req: NextRequest) {
 
   if ( unauthenticatedRoutes.includes(req.nextUrl.pathname)) return null;
+
+  if (req.nextUrl.pathname === '/logout'){
+
+    let nrr = NextResponse.redirect(new URL('/login', req.url))
+    nrr.cookies.delete(AUTH_TOKEN)
+    
+    return nrr
+  }
 
   let verifiedToken
   try {
