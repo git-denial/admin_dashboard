@@ -15,9 +15,7 @@ export class AuthError extends Error {}
  * Verifies the user's JWT token and returns its payload if it's valid.
  */
 export async function verifyAuth(req: NextRequest) {
-  console.log(cookies())
-  console.log(AUTH_TOKEN)
-  console.log(req.cookies.get(AUTH_TOKEN))
+
   const token = req.cookies.get(AUTH_TOKEN)?.value
 
   if (!token) return null

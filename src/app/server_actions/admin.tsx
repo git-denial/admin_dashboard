@@ -23,9 +23,6 @@ export async function changePassword(id: number, body: any): Promise<Admin> {
     let newSalt = cryptoUtil.generateSalt();
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
 
-    console.log(newSalt)
-    console.log(newProcessedPassword)
-
     return await model.update({
         data: { password: newProcessedPassword, salt: newSalt},
         where: { id }
