@@ -1,3 +1,4 @@
+import AdminAPI from "@/app/api/AdminAPI"
 import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,10 +20,10 @@ export default function LoginForm() {
       <form action={async(formData)=>{
         "use server"
 
-        let email = formData.get("email") +''
+        let username = formData.get("username") +''
         let password = formData.get("password") +''
 
-        let result = await UserApi.login(email,password)
+        let result = await AdminAPI.login(username,password)
 
         redirect('/users')
 
@@ -32,13 +33,13 @@ export default function LoginForm() {
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account.
+          Enter your username below to login to your account.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" name="email" placeholder="m@example.com" required />
+          <Label htmlFor="email">Username</Label>
+          <Input id="email" type="text" name="username" placeholder="" required />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
