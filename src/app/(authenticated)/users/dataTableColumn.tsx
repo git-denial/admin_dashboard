@@ -61,6 +61,7 @@ export const UserDataTableColumns: ColumnDef<User>[] = [
       )
     },
     cell: ({ row }) => <div>{row.getValue("id")}</div>,
+    filterFn: 'myCustomFilter' as any
   },
   {
     accessorKey: "full_name",

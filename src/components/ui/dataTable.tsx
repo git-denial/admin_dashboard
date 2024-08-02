@@ -88,6 +88,9 @@ export default function DataTable({ data, columns, createPageHref }: any) {
         
         if(value == null || value === '') return false
 
+
+        if(columnId === 'id') value = parseInt(value+'')
+
         if(columnId === 'birth_date') value = new Date(value).toISOString().substring(0, 10)
   
         if(searchMode === SEARCH_MODE.START) return value.toString().toLowerCase().trim().startsWith(filterValue)
