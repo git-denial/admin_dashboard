@@ -262,13 +262,21 @@ export default function DataTable({ data, columns, createPageHref }: any) {
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="space-x-2">
+        <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<<"}
+          </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {"<"}
           </Button>
           <Button
             variant="outline"
@@ -276,7 +284,15 @@ export default function DataTable({ data, columns, createPageHref }: any) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {">"}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">>"}
           </Button>
         </div>
       </div>
