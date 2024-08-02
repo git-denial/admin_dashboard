@@ -15,6 +15,9 @@ import { SidebarSelection } from "@/app/(authenticated)/sidebarselection";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Topbreadcrumb } from "./topbreadcrumb";
+import { cookies } from "next/headers";
+import { AUTH_TOKEN } from "@/lib/constants";
+import { decodeJWTToken } from "@/lib/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +26,11 @@ export const metadata: Metadata = {
   description: "Goodashboard",
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
+export default async function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
+
+  let token = cookies().get(AUTH_TOKEN)?.value + ''
+  let currentData = await decodeJWTToken(token) as any
+
 
   return (
     <html lang="en">
@@ -133,7 +140,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="right-0">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{currentData.username}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <Link href="/settings"> <DropdownMenuItem>Settings</DropdownMenuItem> </Link>
               <DropdownMenuSeparator />
