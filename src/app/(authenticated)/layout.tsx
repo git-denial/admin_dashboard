@@ -155,7 +155,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
               <DropdownMenuSeparator />
               <Link href="/settings"> <DropdownMenuItem>Settings</DropdownMenuItem> </Link>
               <DropdownMenuSeparator />
-              <Link href="/logout"> <DropdownMenuItem>Logout</DropdownMenuItem> </Link>
+              <Link href="/logout"> <DropdownMenuItem className="focus:bg-destructive">Logout</DropdownMenuItem> </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
