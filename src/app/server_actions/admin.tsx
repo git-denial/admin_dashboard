@@ -48,7 +48,7 @@ export async function updateAdmin(id:number, body:any) : Promise<Admin>  {
 export async function changeUsername(id:number, username:string){
     
     
-    if((await model.findUnique({where:{username}}))?.id) return {error: "Username already exist"}    
+    if((await model.findUnique({where:{username}}))?.id) throw Error("Username already exist")  
     
 
     return await model.update({

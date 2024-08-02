@@ -40,6 +40,9 @@ export default async function SettingsPage() {
                   "use server"
 
                   let username = formData.get("username") + ''
+
+                  if(current.username === username) return
+
                   let result = await changeUsername(current.id, username)
 
                 }}>
