@@ -1,8 +1,11 @@
 "use server"
+import { AuthError, authRole } from "@/lib/auth";
+import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {users as User} from "@prisma/client"
+import { cookies } from "next/headers";
 
 const model = prisma.users
 
@@ -31,6 +34,9 @@ function props(){
 
 export async function changePassword(id: number, body: any): Promise<User> {
 
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+
     let newSalt = cryptoUtil.generateSalt();
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
 
@@ -41,10 +47,16 @@ export async function changePassword(id: number, body: any): Promise<User> {
 }
 
 export async function deleteUser(id:number) : Promise<User>  {
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+        
     return await model.delete({where:{id}})
 }
 
 export async function updateUser(id:number, body:any) : Promise<User>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
     
     body.birth_date = body.birth_date ? new Date(body.birth_date) : undefined
     
