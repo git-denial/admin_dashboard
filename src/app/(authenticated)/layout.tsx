@@ -18,6 +18,8 @@ import { Topbreadcrumb } from "./topbreadcrumb";
 import { cookies } from "next/headers";
 import { AUTH_TOKEN } from "@/lib/constants";
 import { decodeJWTToken } from "@/lib/auth";
+import { ThemeProvider } from "@/components/theme-provider";
+import { LightDarkModeToggle } from "@/components/ui/light_dark_mode_toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,8 +36,16 @@ export default async function RootLayout({children}: Readonly<{children: React.R
 
   return (
     <html lang="en">
+      
       <body className={inter.className}>
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+        
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -132,6 +142,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
             </SheetContent>
           </Sheet> */}
           <Topbreadcrumb/>
+          <LightDarkModeToggle/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full ml-auto">
@@ -155,6 +166,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
         
       </div>
     </div>
+    </ThemeProvider>
         
         </body>
     </html>
