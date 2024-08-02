@@ -12,18 +12,11 @@ const model = prisma.cardiologists
 function props(){
     let obj: Cardiologist = {
         id: 0,
-        doctor_id: 0,
         full_name: "",
         email: "",
         password: "",
         salt: "",
         phone_num: null,
-        bank_num: null,
-        verified: false,
-        activation_token: "",
-        activation_token_expired_at: new Date(),
-        password_reset_token: null,
-        password_reset_token_expired_at: null,
         created_at: new Date(),
         modified_at: null
     }

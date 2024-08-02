@@ -20,12 +20,6 @@ function props(){
         weight: null,
         height: null,
         phone_num: null,
-        emergency_phone_num: null,
-        activation_token: "",
-        activation_token_expired_at: new Date(),
-        password_reset_token: null,
-        password_reset_token_expired_at: null,
-        verified: false,
         created_at: new Date(),
         modified_at: null
     }
