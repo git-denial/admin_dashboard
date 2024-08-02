@@ -1,8 +1,11 @@
 "use server"
+import { AuthError, authRole } from "@/lib/auth";
+import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {administrators as Admin} from "@prisma/client"
+import { cookies } from "next/headers";
 
 const model = prisma.administrators
 
@@ -18,8 +21,11 @@ function props(){
     return Object.keys(obj)   
 }
 
-export async function changePassword(id: number, password: string): Promise<Admin> {    
+export async function changePassword(id: number, password: string): Promise<Admin> {
 
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+    
     let newSalt = cryptoUtil.generateSalt();
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(password, newSalt);
 
@@ -30,10 +36,17 @@ export async function changePassword(id: number, password: string): Promise<Admi
 }
 
 export async function deleteAdmin(id:number) : Promise<Admin>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+
     return await model.delete({where:{id}})
 }
 
 export async function updateAdmin(id:number, body:any) : Promise<Admin>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
     
     delete body.username
     delete body.password
@@ -46,6 +59,9 @@ export async function updateAdmin(id:number, body:any) : Promise<Admin>  {
 }
 
 export async function changeUsername(id:number, username:string){
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
     
     
     if((await model.findUnique({where:{username}}))?.id) throw Error("Username already exist")  
@@ -58,6 +74,9 @@ export async function changeUsername(id:number, username:string){
 }
 
 export async function createAdmin(body:any) : Promise<Admin>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
 
     generalUtil.removeUnknownProps(body, props())
     

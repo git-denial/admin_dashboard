@@ -7,6 +7,7 @@ import { cookies } from 'next/headers'
 interface UserJwtPayload {
   jti: string
   iat: number
+  type: 'USER'|'CARDIOLOGIST'|'ADMIN'
 }
 
 export class AuthError extends Error {}
@@ -23,10 +24,11 @@ export async function verifyAuth(req: NextRequest) {
   try {
     const verified = await jwtVerify(token,new TextEncoder().encode(JWT_SECRET_KEY))
     
-    return verified.payload as UserJwtPayload
+    return verified.payload as unknown as UserJwtPayload
 
   } catch (err) {
-    throw new AuthError('Your token has expired.')
+    console.log(err)
+    return null
   }
 }
 
@@ -43,11 +45,22 @@ export async function decodeJWTToken(token:string){
   
   try {
     const verified = await jwtVerify(token,new TextEncoder().encode(JWT_SECRET_KEY))
-    return verified.payload  
+    return verified.payload  as unknown as UserJwtPayload
 
   } catch (error) {
     console.log(error)
     return null
   }
   
+}
+
+export async function authRole(JWToken:string, role:string){
+    let token = JWToken
+
+    let decoded = await decodeJWTToken(token)    
+
+    if(!decoded) return false
+    if(decoded.type !== role) return false
+
+    return true
 }
