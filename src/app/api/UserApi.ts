@@ -1,4 +1,4 @@
-import { AuthError, generateJWToken } from "@/lib/auth";
+import { AuthError, authRole, generateJWToken } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
@@ -11,14 +11,23 @@ import { NextResponse } from "next/server";
 const model = prisma.users
 
 async function getAll(): Promise<User[]> {
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+        
     return await model.findMany()
 }
 
 async function getById(id: number): Promise<User | null> {
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+
     return await model.findUnique({ where: { id } })
 }
 
 async function getByEmail(email: string): Promise<User | null> {
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+        
     return await model.findUnique({ where: { email } })
 }
 

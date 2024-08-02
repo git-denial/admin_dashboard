@@ -5,6 +5,7 @@ import { AUTH_TOKEN, JWT_SECRET_KEY } from './constants'
 import { cookies } from 'next/headers'
 
 interface UserJwtPayload {
+  id:string
   jti: string
   iat: number
   type: 'USER'|'CARDIOLOGIST'|'ADMIN'

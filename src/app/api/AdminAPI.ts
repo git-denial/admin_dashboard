@@ -1,4 +1,4 @@
-import { AuthError, decodeJWTToken, generateJWToken, verifyAuth } from "@/lib/auth";
+import { AuthError, authRole, decodeJWTToken, generateJWToken, verifyAuth } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
@@ -10,6 +10,9 @@ import { NextResponse } from "next/server";
 const model = prisma.administrators
 
 async function getAll() : Promise<Admin[]>  {
+    
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
 
     let admins = await model.findMany()
 
@@ -20,6 +23,9 @@ async function getAll() : Promise<Admin[]>  {
 
 async function getById(id:number) : Promise<Admin|null>  {
 
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+
     let admin = await model.findUnique({where:{id}})
 
     generalUtil.removeSensitiveDataFromObj(admin)
@@ -28,6 +34,9 @@ async function getById(id:number) : Promise<Admin|null>  {
 }
 
 async function getByUsername(username:string) : Promise<Admin|null>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
 
     let admin = await model.findUnique({where:{username}})
 
