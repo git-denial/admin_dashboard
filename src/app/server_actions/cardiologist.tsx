@@ -1,8 +1,11 @@
 "use server"
+import { authRole, AuthError } from "@/lib/auth";
+import { AUTH_TOKEN } from "@/lib/constants";
 import prisma from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {cardiologists as Cardiologist} from "@prisma/client"
+import { cookies } from "next/headers";
 
 const model = prisma.cardiologists
 
@@ -27,7 +30,10 @@ function props(){
     return Object.keys(obj)   
 }
 
-export async function changePassword(id: number, body: any): Promise<Cardiologist> {    
+export async function changePassword(id: number, body: any): Promise<Cardiologist> {
+    
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
 
     let newSalt = cryptoUtil.generateSalt();
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
@@ -39,10 +45,16 @@ export async function changePassword(id: number, body: any): Promise<Cardiologis
 }
 
 export async function deleteCardiologist(id:number) : Promise<Cardiologist>  {
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
+
     return await model.delete({where:{id}})
 }
 
 export async function updateCardiologist(id:number, body:any) : Promise<Cardiologist>  {
+
+    let token = cookies().get(AUTH_TOKEN)?.value + ''
+    if(!authRole(token, "ADMIN")) throw new AuthError("Unauthorized access")
     
     body.birth_date = body.birth_date ? new Date(body.birth_date) : undefined
     
@@ -56,7 +68,7 @@ export async function updateCardiologist(id:number, body:any) : Promise<Cardiolo
 }
 
 export async function createCardiologist(body:any) : Promise<Cardiologist>  {
-
+    
     generalUtil.removeUnknownProps(body, props())
     
     let salt = cryptoUtil.generateSalt()
