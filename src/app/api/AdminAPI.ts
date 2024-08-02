@@ -1,13 +1,13 @@
 import { AuthError, authRole, decodeJWTToken, generateJWToken, verifyAuth } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {administrators as Admin} from "@prisma/client"
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-const model = prisma.administrators
+const model = db.administrators
 
 async function getAll() : Promise<Admin[]>  {
     

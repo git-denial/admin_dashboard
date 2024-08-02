@@ -1,13 +1,13 @@
 "use server"
 import { AuthError, authRole } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {users as User} from "@prisma/client"
 import { cookies } from "next/headers";
 
-const model = prisma.users
+const model = db.users
 
 function props(){
     let obj: User = {

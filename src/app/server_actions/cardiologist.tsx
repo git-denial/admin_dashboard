@@ -1,13 +1,13 @@
 "use server"
 import { authRole, AuthError } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {cardiologists as Cardiologist} from "@prisma/client"
 import { cookies } from "next/headers";
 
-const model = prisma.cardiologists
+const model = db.cardiologists
 
 function props(){
     let obj: Cardiologist = {
