@@ -12,6 +12,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { redirect } from "next/navigation"
+import { Metadata } from "next/types"
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Login",
+};
 
 
 export default function LoginForm() {
@@ -47,7 +53,7 @@ export default function LoginForm() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Sign in</Button>
+        <Button className="w-full" id="login">Sign in</Button>
       </CardFooter>
     </Card>
       </form>
