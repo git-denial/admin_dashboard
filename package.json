@@ -7,7 +7,10 @@
     "dev_turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest --config ./vitest.config.ts",
+    "coverage": "vitest run --coverage",
+    "e2etest": "npx playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -41,16 +44,22 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.45.3",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "jsdom": "^24.1.1",
     "postcss": "^8",
     "prisma": "^5.17.0",
     "prisma-generator-pothos-codegen": "^0.7.0",
     "tailwindcss": "^3.4.1",
     "typegraphql-prisma": "^0.27.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^2.0.5"
   }
 }
