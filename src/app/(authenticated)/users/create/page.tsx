@@ -73,7 +73,7 @@ export default function CreateUser() {
         title: <div> <SpinnerLoading className="text-primary my-0 mr-2 display: inline"/> Creating</div> as any
       })
 
-      // await createUser(data)
+      await createUser(data)
 
       toast({
         title: "User created"
