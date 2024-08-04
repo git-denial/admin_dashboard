@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Suspense } from "react";
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle } from "@radix-ui/react-toast";
 
 
 const inter = Inter({ subsets: ["latin"] });

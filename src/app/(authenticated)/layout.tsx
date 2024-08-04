@@ -2,18 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link"
 import {
-  Bell,
   CircleUser,
   BarChart
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import { SidebarSelection } from "@/app/(authenticated)/sidebarselection";
-import { Input } from "@/components/ui/input";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Topbreadcrumb } from "./topbreadcrumb";
 import { cookies } from "next/headers";
 import { AUTH_TOKEN } from "@/lib/constants";

@@ -1,13 +1,11 @@
 import AdminAPI from "@/app/api/AdminAPI"
-import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { AUTH_TOKEN } from "@/lib/constants"
-import { Checkbox } from "@radix-ui/react-checkbox"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
-import { changePassword, changeUsername, updateAdmin } from "@/app/server_actions/admin"
+import { changePassword, changeUsername } from "@/app/server_actions/admin"
 
 //With the intent to make this page fully React Server Component, interactivity is pretty much nonexistent here...
 

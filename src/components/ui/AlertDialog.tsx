@@ -7,10 +7,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { Dispatch, EventHandler, MouseEventHandler, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import SpinnerLoading from "./spinnerloading"
 
 export default function AlertDialogue({opened, onOpenChange, headMsg, bodyMsg, continueFunction}: {opened:boolean, onOpenChange:Dispatch<SetStateAction<boolean>>, headMsg: string, bodyMsg: string, continueFunction:VoidFunction}) {

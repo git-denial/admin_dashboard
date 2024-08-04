@@ -1,4 +1,4 @@
-import { AuthError, authRole, decodeJWTToken, generateJWToken, verifyAuth } from "@/lib/auth";
+import { AuthError, authRole, decodeJWTToken, generateJWToken } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
 import { db } from "@/lib/prisma";
 import cryptoUtil from "@/utils/cryptoUtil";

@@ -1,5 +1,4 @@
 import AdminAPI from "@/app/api/AdminAPI"
-import UserApi from "@/app/api/UserApi"
 import { Button } from "@/components/ui/button"
 import {
   Card,

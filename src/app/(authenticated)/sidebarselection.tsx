@@ -2,23 +2,7 @@
 import * as React from "react"
 import Link from "next/link"
 import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-  BarChart,
   User,
-  LucideUserX2,
-  Star,
-  UserCheck,
-  UserCheck2,
-  PlusCircle,
   HeartPulse
 } from "lucide-react"
 

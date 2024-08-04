@@ -1,12 +1,8 @@
 "use server"
 
 import {
-  ChevronLeft,
-  ChevronRight,
   Copy,
-  CreditCard,
   MoreVertical,
-  Truck,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -14,25 +10,18 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination"
+
+
 import { Separator } from "@/components/ui/separator"
 import UserApi from "@/app/api/UserApi"
-import { users as User } from "@prisma/client"
 import ChangePasswordDialog from "./changePasswordDialog"
 import EditDialog from "./EditDialog"
 import { DeleteUserDialog } from "./deleteUserDialog"

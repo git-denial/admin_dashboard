@@ -10,11 +10,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
   import SpinnerLoading from "@/components/ui/spinnerloading"
 import { useState } from "react"
 import { toast } from "@/components/ui/use-toast"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { deleteCardiologist } from "@/app/server_actions/cardiologist"
   
   export function DeleteDialog({child, text, id}: {child:React.ReactNode, text:{head:string, body:string}, id:number}) {

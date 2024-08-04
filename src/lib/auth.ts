@@ -1,8 +1,7 @@
-import type { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 import { nanoid } from 'nanoid'
 import { SignJWT, jwtVerify } from 'jose'
 import { AUTH_TOKEN, JWT_SECRET_KEY } from './constants'
-import { cookies } from 'next/headers'
 
 interface UserJwtPayload {
   id:string

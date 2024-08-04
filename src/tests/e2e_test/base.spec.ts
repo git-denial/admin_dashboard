@@ -1,4 +1,3 @@
-import { AUTH_TOKEN } from '@/lib/constants';
 import { test, expect } from '@playwright/test';
 
 const URL = "http://localhost:3000"

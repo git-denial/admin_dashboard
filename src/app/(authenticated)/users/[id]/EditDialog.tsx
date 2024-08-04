@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,9 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { updateUser } from "@/app/server_actions/user"
-import { Label } from "@/components/ui/label"
 import { users as User } from "@prisma/client"
-import { redirect } from "next/dist/server/api-utils"
 import { useRouter } from "next/navigation"
 
 const FormSchema = z.object({
