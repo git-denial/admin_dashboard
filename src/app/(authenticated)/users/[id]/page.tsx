@@ -65,6 +65,7 @@ export default async function UserDetail({params}: {params:{id:string}}) {
             </Button>
           </CardTitle>
           <CardDescription>Created: {new Date(userDetail.created_at).toDateString()}</CardDescription>
+          <CardDescription>Last modified: {new Date(userDetail.modified_at).toDateString()}</CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
           {/* <Button size="sm" variant="outline" className="h-8 gap-1">

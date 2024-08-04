@@ -38,12 +38,12 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
 
   let id = parseInt(params.id)
 
-  if(isNaN(id)) redirect('/users')
+  if(isNaN(id)) redirect('/cardiologists')
 
-  const userDetail = JSON.parse(JSON.stringify(await CardiologistApi.getById(id)))
+  const cardiologDetail = JSON.parse(JSON.stringify(await CardiologistApi.getById(id)))
   
   
-  if(userDetail)
+  if(cardiologDetail)
   return (
     <Card className="overflow-hidden w-1/3 m-auto">
       <CardHeader className="flex flex-row items-start bg-muted/50">
@@ -59,7 +59,8 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
               <span className="sr-only">Copy ID</span>
             </Button>
           </CardTitle>
-          <CardDescription>Created: {new Date(userDetail.created_at).toDateString()}</CardDescription>
+          <CardDescription>Created: {new Date(cardiologDetail.created_at).toDateString()}</CardDescription>
+          <CardDescription>Last modified: {new Date(cardiologDetail.modified_at).toDateString()}</CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
           {/* <Button size="sm" variant="outline" className="h-8 gap-1">
@@ -78,16 +79,16 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
             <DropdownMenuContent className="w-10" align="end">
             <EditDialog
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Edit</Button>}
-            cardiolog={userDetail}
+            cardiolog={cardiologDetail}
             />
             <ChangePasswordDialog 
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Change password</Button>}
-            cardiologist={userDetail}
+            cardiologist={cardiologDetail}
             />
             <DeleteDialog
             child={<Button className="w-full text-[12px] border-primary hover:bg-destructive hover:text-white" variant={'ghost'}>Delete</Button>}
             text={{head:"Are you sure?", body:"You are about to delete this user"}}
-            id={userDetail.id}            
+            id={cardiologDetail.id}            
             />
             
               
@@ -103,18 +104,18 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
               <span className="text-muted-foreground">
                 Full Name
               </span>
-              <span>{userDetail.full_name}</span>
+              <span>{cardiologDetail.full_name}</span>
             </li>
           </ul>
         <Separator className="my-2" />
         <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Phone Number</span>
-              <span>{ userDetail.phone_num == null ? '-' : userDetail.phone_num+''}</span>
+              <span>{ cardiologDetail.phone_num == null ? '-' : cardiologDetail.phone_num+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Email</span>
-              <span>{userDetail.email}</span>
+              <span>{cardiologDetail.email}</span>
             </li>
           </ul>
         </div>

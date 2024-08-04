@@ -32,7 +32,7 @@ export async function changePassword(id: number, body: any): Promise<Cardiologis
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
 
     return await model.update({
-        data: { password: newProcessedPassword, salt: newSalt},
+        data: { password: newProcessedPassword, salt: newSalt, modified_at:new Date()},
         where: { id }
     })
 }
@@ -55,8 +55,8 @@ export async function updateCardiologist(id:number, body:any) : Promise<Cardiolo
     delete body.salt
 
     return await model.update({
-        data:{...body}, 
-        where:{id}
+        data:{...body, modified_at:new Date()}, 
+        where:{id},
     })
 }
 

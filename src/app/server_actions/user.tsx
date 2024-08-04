@@ -35,7 +35,7 @@ export async function changePassword(id: number, body: any): Promise<User> {
     let newProcessedPassword = cryptoUtil.hashPasswordWithSalt(body.password, newSalt);
 
     return await model.update({
-        data: { password: newProcessedPassword, salt: newSalt},
+        data: { password: newProcessedPassword, salt: newSalt, modified_at:new Date()},
         where: { id }
     })
 }
@@ -58,7 +58,7 @@ export async function updateUser(id:number, body:any) : Promise<User>  {
     delete body.salt
 
     return await model.update({
-        data:{...body}, 
+        data:{...body, modified_at: new Date()}, 
         where:{id}
     })
 }
