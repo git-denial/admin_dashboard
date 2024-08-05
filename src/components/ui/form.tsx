@@ -13,6 +13,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import * as LabelPrimitive from "@radix-ui/react-label"
 
 const Form = FormProvider
 
