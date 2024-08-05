@@ -87,6 +87,7 @@ export default function CreateCardiologist() {
   
   return (
     <>
+    <title>Create cardiologist</title>
     <div className="flex items-center">
 
             <h1 className="text-lg font-semibold md:text-2xl">Create Cardiologist</h1>

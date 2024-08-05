@@ -6,8 +6,15 @@ import { AUTH_TOKEN } from "@/lib/constants"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
 import { changePassword, changeUsername } from "@/app/server_actions/admin"
+import { Metadata } from "next/types"
 
 //With the intent to make this page fully React Server Component, interactivity is pretty much nonexistent here...
+
+export const metadata: Metadata = {
+  title: "Settings",
+  description: "settings",
+};
+
 
 export default async function SettingsPage() {
 

@@ -4,8 +4,12 @@ import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/dataTable"
 import { UserDataTableColumns } from "./dataTableColumn"
 import Link from "next/link"
+import { Metadata } from "next/types"
 
-
+export const metadata: Metadata = {
+  title: "Users",
+  description: "users",
+};
 
 
 export default async function UsersPage() {

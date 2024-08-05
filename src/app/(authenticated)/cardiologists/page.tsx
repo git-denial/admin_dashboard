@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/dataTable"
 import { CardiologistDataTableColumns } from "./dataTableColumn"
 import Link from "next/link"
+import { Metadata } from "next/types"
+
+export const metadata: Metadata = {
+  title: "Cardiologists",
+  description: "Cardiologists",
+};
 
 
-
-
-export default async function UsersPage() {
+export default async function CardiologistsPage() {
 
   let cardiologists = JSON.parse(JSON.stringify((await CardiologistApi.getAll())))
   //process nullish value to empty string so that it can be search globally within the datatable

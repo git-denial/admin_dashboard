@@ -90,6 +90,7 @@ export default function CreateUser() {
   
   return (
     <>
+    <title>Create user</title>
     <div className="flex items-center">
 
             <h1 className="text-lg font-semibold md:text-2xl">Create User</h1>

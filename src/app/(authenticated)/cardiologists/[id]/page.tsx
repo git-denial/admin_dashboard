@@ -39,6 +39,7 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
   if(cardiologDetail)
   return (
     <Card className="overflow-hidden w-1/3 m-auto">
+      <title>Cardiologist detail</title>
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
