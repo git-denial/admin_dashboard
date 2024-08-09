@@ -5,7 +5,6 @@ import {
 } from "@/components/ui/card"
 
 import { redirect } from "next/navigation"
-import ChatBox from "./chatBox"
 import ChatAPI from "@/app/api/ChatAPI"
 import ConsultationAPI from "@/app/api/ConsultationAPI"
 import ChatBox2 from "./chatBox2"

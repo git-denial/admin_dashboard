@@ -1,8 +1,5 @@
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { HeartPulse, User, User2 } from "lucide-react"
+import { Avatar } from "@/components/ui/avatar"
+import { HeartPulse, User2 } from "lucide-react"
 
 export default function ChatBox2({user, cardiologist, messages}) {
    return (

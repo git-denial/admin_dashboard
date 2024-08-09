@@ -4,11 +4,6 @@ import Link from "next/link"
 import {
   User,
   HeartPulse,
-  Speech,
-  Check,
-  Speaker,
-  Timer,
-  PlusCircle,
   Clipboard
 } from "lucide-react"
 

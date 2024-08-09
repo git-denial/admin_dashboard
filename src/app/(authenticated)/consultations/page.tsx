@@ -1,9 +1,7 @@
 
 import ConsultationApi from "@/app/api/ConsultationAPI"
-import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/dataTable"
 import { ConsultationsDataTableColumns } from "./dataTableColumn"
-import Link from "next/link"
 import { Metadata } from "next/types"
 
 export const metadata: Metadata = {
