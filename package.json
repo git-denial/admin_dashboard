@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "lint": "next lint",
+    "lint": "pnpx eslint",
     "test": "vitest --config ./vitest.config.ts",
     "coverage": "vitest run --coverage",
     "e2etest": "npx playwright test"

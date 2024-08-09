@@ -1,25 +1,14 @@
 "use server"
 
-import {
-  Copy,
-  MoreVertical,
-} from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+
+
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
-import { Separator } from "@/components/ui/separator"
+
+
 import ConsultationApi from "@/app/api/ConsultationAPI"
 import { redirect } from "next/navigation"
 

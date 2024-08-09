@@ -2,7 +2,6 @@
 import { authRole, AuthError } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
 import { db } from "@/lib/prisma";
-import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {consultations as Consultation} from "@prisma/client"
 import { cookies } from "next/headers";
