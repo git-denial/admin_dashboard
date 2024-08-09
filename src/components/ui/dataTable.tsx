@@ -203,7 +203,7 @@ export default function DataTable({ data, columns, createPageHref }: any) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-      <Link href={createPageHref}><Button className="ml-8">Create</Button></Link>
+      {createPageHref ? <Link href={createPageHref}><Button className="ml-8">Create</Button></Link> : null}
       </div>
       <div className="rounded-md border">
         <Table>

@@ -3,7 +3,13 @@ import * as React from "react"
 import Link from "next/link"
 import {
   User,
-  HeartPulse
+  HeartPulse,
+  Speech,
+  Check,
+  Speaker,
+  Timer,
+  PlusCircle,
+  Clipboard
 } from "lucide-react"
 
 import { usePathname } from "next/navigation"
@@ -34,6 +40,14 @@ function SidebarSelection() {
               >
                 <HeartPulse className="h-4 w-4" />
                 Cardiologists
+              </Link>
+
+              <Link
+                href="/consultations"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname.split("/")[1] ===  "consultations" ? `bg-muted text-primary` : `text-muted-foreground`} transition-all hover:text-primary`}
+              >
+                <Clipboard className="h-4 w-4" />
+                Consultations
               </Link>
               
             </nav>

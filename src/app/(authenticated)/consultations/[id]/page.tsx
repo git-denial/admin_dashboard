@@ -1,16 +1,14 @@
 "use server"
 
-
-
-
 import {
   Card,
 } from "@/components/ui/card"
 
-
-
-import ConsultationApi from "@/app/api/ConsultationAPI"
 import { redirect } from "next/navigation"
+import ChatBox from "./chatBox"
+import ChatAPI from "@/app/api/ChatAPI"
+import ConsultationAPI from "@/app/api/ConsultationAPI"
+import ChatBox2 from "./chatBox2"
 
 
 export default async function ConsultationsDetail({params}: {params:{id:string}}) {
@@ -19,13 +17,15 @@ export default async function ConsultationsDetail({params}: {params:{id:string}}
 
   if(isNaN(id)) redirect('/consultations')
 
-  const consulDetail = JSON.parse(JSON.stringify(await ConsultationApi.getById(id)))
+  const detail = JSON.parse(JSON.stringify(await ConsultationAPI.getById(id)))
+  const chatDetail = JSON.parse(JSON.stringify(await ChatAPI.getByConsultationId(id)))
   
   
-  if(consulDetail)
+  if(chatDetail)
   return (
     <Card className="overflow-hidden w-1/3 m-auto">
       <title>Consultation detail</title>
+      <ChatBox2 user={detail.users} cardiologist={detail.cardiologists} messages={[...chatDetail, ...chatDetail, ...chatDetail]} />
       
     </Card>    
   )  

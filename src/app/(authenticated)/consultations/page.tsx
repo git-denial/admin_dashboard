@@ -18,6 +18,8 @@ export default async function ConsultationsPage() {
   //process nullish value to empty string so that it can be search globally within the datatable
   consultations  = consultations.map((u:any)=> {
     for(let o of Object.keys(u)) if(u[o] == null) u[o] = ''
+    u.user_name = u.users.full_name
+    u.cardiologist_name = u.cardiologists.full_name
     return u
   })
   
@@ -40,10 +42,10 @@ export default async function ConsultationsPage() {
               <p className="text-sm text-muted-foreground">
                 Table of consultations will appear once there is a consultation
               </p>
-              <Link href="/users/create"><Button className="mt-4">Create Consultation</Button></Link>
+              {/* <Link href="/users/create"><Button className="mt-4">Create Consultation</Button></Link> */}
             </div>
             :
-            <DataTable data={consultations} columns={ConsultationsDataTableColumns} createPageHref={'/consultations/create'}/>
+            <DataTable data={consultations} columns={ConsultationsDataTableColumns}/>
         }
 
       </div>
