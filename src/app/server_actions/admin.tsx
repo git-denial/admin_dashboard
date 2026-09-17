@@ -84,11 +84,8 @@ export async function createAdmin(body:any) : Promise<Admin>  {
     
     const admin: Admin = {
         ...body,
-        birth_date: body.birth_date ? new Date(body.birth_date) : undefined,
         salt: salt,
         password: cryptoUtil.hashPasswordWithSalt(body.password, salt),
-        activation_token: cryptoUtil.generateRandomString(16),
-        activation_token_expired_at: generalUtil.nowPlusDay(1),
         created_at: new Date()
     }
     

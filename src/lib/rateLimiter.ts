@@ -31,7 +31,7 @@ export async function checkRateLimit(identifier: string, key: string): Promise<{
   const windowSeconds = Math.ceil(config.windowMs / 1000);
 
   try {
-    let [current, ttl] = (await redis.multi().incr(redisKey).expire(redisKey, windowSeconds, "NX").ttl(redisKey).exec()) as unknown as [number, number];
+    let [current, exp , ttl] = (await redis.multi().incr(redisKey).expire(redisKey, windowSeconds, "NX").ttl(redisKey).exec()) as unknown as [number, number, number];
 
     const allowed = current <= config.maxRequests;
     const remaining = Math.max(0, config.maxRequests - current);
