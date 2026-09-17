@@ -32,8 +32,8 @@ const FormSchema = z.object({
   full_name: z.string().min(2, { message: "Full Name must be at least 2 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   birth_date: z.string().optional(),
-  weight: z.coerce.number().optional().or(z.nan()),
-  height: z.coerce.number().optional().or(z.nan()),
+  weight: z.coerce.number().optional(),
+  height: z.coerce.number().optional(),
   phone_num: z.string().optional(),
 })
 
@@ -46,14 +46,14 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      full_name: user.full_name ?? "",
-      email: user.email ?? "",
-      birth_date: user.birth_date
+      full_name: user?.full_name ?? "",
+      email: user?.email ?? "",
+      birth_date: user?.birth_date
         ? new Date(user.birth_date).toISOString().substring(0, 10)
         : "",
-      weight: user.weight ? parseFloat(user.weight.toString()) : undefined,
-      height: user.height ? parseFloat(user.height.toString()) : undefined,
-      phone_num: user.phone_num ?? "",
+      weight: user?.weight ? Number(user.weight) : undefined,
+      height: user?.height ? Number(user.height) : undefined,
+      phone_num: user?.phone_num ?? "",
     },
   })
 
@@ -65,7 +65,6 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
 
       toast({
         title: "User updated",
-        description: "User details have been saved successfully.",
       })
 
       setOpen(false)
@@ -82,11 +81,17 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{child}</DialogTrigger>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent 
+        className="sm:max-w-[525px]"
+        onOpenAutoFocus={(e) => {
+          // Prevents Radix FocusTrap from breaking input pointer events on open
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Edit User</DialogTitle>
           <DialogDescription>
-            Make changes to the user profile here. Click save when you're done.
+            Click Save Changes when you're done.
           </DialogDescription>
         </DialogHeader>
 
@@ -99,7 +104,7 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -113,7 +118,7 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" {...field} />
+                    <Input type="email" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,52 +132,50 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
                 <FormItem>
                   <FormLabel>Birth Date</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input type="date" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="weight"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Weight (kg)</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        step="any"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <FormField
+              control={form.control}
+              name="weight"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Weight</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="any"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="height"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Height (cm)</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        step="any"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="height"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Height</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="any"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
@@ -181,18 +184,16 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <div className="flex justify-end pt-2">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Saving..." : "Save Changes"}
-              </Button>
-            </div>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save Changes"}
+            </Button>
           </form>
         </Form>
       </DialogContent>
