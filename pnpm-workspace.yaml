@@ -1,5 +1,5 @@
 allowBuilds:
-  '@prisma/client': false
+  '@prisma/client': true
   '@prisma/engines': false
   esbuild: false
-  prisma: false
+  prisma: true
