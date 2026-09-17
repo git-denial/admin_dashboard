@@ -1,10 +1,11 @@
 import { AuthError, authRole, decodeJWTToken, generateJWToken } from "@/lib/auth";
 import { AUTH_TOKEN } from "@/lib/constants";
 import { db } from "@/lib/prisma";
+import { checkRateLimit, getClientIPFromHeaderList, TooManyRequestsError } from "@/lib/rateLimiter";
 import cryptoUtil from "@/utils/cryptoUtil";
 import generalUtil from "@/utils/generalUtil";
 import {administrators as Admin} from "@prisma/client"
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 const model = db.administrators
@@ -63,6 +64,12 @@ async function getByIdFromJWToken(token:string) : Promise<Admin|null>  {
 }
 
 async function login(username: string, pass: string) {
+    
+    const headersList = headers()
+    let {allowed, remaining, retryAfter} = await checkRateLimit(getClientIPFromHeaderList(headersList),'login')
+    
+    if(!allowed) throw new TooManyRequestsError(retryAfter)
+
     let user = await model.findUnique({ where: { username } })
 
     if (!user) throw new AuthError('Incorrect credentials')
