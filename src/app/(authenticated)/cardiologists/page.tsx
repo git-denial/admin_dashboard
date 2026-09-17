@@ -40,7 +40,7 @@ export default async function CardiologistsPage() {
               <p className="text-sm text-muted-foreground">
                 Table of cardiologists will appear once there is a cardiologist
               </p>
-              <Link href="/users/create"><Button className="mt-4">Create Cardiologist</Button></Link>
+              <Link href="/cardiologists/create"><Button className="mt-4">Create Cardiologist</Button></Link>
             </div>
             :
             <DataTable data={cardiologists} columns={CardiologistDataTableColumns} createPageHref={'/cardiologists/create'}/>
