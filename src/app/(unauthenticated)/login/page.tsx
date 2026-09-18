@@ -30,7 +30,7 @@ export default function LoginForm() {
 
         let result = await AdminAPI.login(username,password)
 
-        redirect('/users')
+        redirect('/dashboard')
 
       }}>
         

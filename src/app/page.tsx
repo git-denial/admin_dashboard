@@ -2,14 +2,14 @@
 import { redirect } from "next/navigation"
 
 export default function Dashboard() {
-  redirect('/users')
-  return (
-    <>
-    <div className="flex items-center">
+  redirect('/dashboard')
+  // return (
+  //   <>
+  //   <div className="flex items-center">
 
-            <h1 className="text-lg font-semibold md:text-2xl">Home</h1>
-            </div>
-    </>
+  //           <h1 className="text-lg font-semibold md:text-2xl">Home</h1>
+  //           </div>
+  //   </>
  
-  )
+  // )
 }
