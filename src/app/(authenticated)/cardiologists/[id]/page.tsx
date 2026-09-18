@@ -13,11 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 
 import { Separator } from "@/components/ui/separator"
 import CardiologistApi from "@/app/api/CardiologistAPI"
@@ -33,10 +29,10 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
 
   if(isNaN(id)) redirect('/cardiologists')
 
-  const cardiologDetail = JSON.parse(JSON.stringify(await CardiologistApi.getById(id)))
+  const cardiologistDetail = JSON.parse(JSON.stringify(await CardiologistApi.getById(id)))
   
   
-  if(cardiologDetail)
+  if(cardiologistDetail)
   return (
     <Card className="overflow-hidden w-1/3 m-auto">
       <title>Cardiologist detail</title>
@@ -53,41 +49,24 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
               <span className="sr-only">Copy ID</span>
             </Button>
           </CardTitle>
-          <CardDescription>Created: {new Date(cardiologDetail.created_at).toDateString()}</CardDescription>
-          <CardDescription>Last modified: {new Date(cardiologDetail.modified_at).toDateString()}</CardDescription>
+          <CardDescription>Created: {new Date(cardiologistDetail.created_at).toDateString()}</CardDescription>
+          <CardDescription>Last modified: {new Date(cardiologistDetail.modified_at).toDateString()}</CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
-          {/* <Button size="sm" variant="outline" className="h-8 gap-1">
-            <Truck className="h-3.5 w-3.5" />
-            <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-              Something
-            </span>
-          </Button> */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="outline" className="h-8 w-8">
-                <MoreVertical className="h-3.5 w-3.5" />
-                <span className="sr-only">More</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-10" align="end">
+          
             <EditDialog
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Edit</Button>}
-            cardiolog={cardiologDetail}
+            cardiolog={cardiologistDetail}
             />
             <ChangePasswordDialog 
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Change password</Button>}
-            cardiologist={cardiologDetail}
+            cardiologist={cardiologistDetail}
             />
             <DeleteDialog
             child={<Button className="w-full text-[12px] border-primary hover:bg-destructive hover:text-white" variant={'ghost'}>Delete</Button>}
-            text={{head:"Are you sure?", body:"You are about to delete this user"}}
-            id={cardiologDetail.id}            
+            text={{head:"Are you sure?", body:"You are about to delete this cardiologist"}}
+            id={cardiologistDetail.id}            
             />
-            
-              
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">
@@ -98,18 +77,18 @@ export default async function CardiologistDetail({params}: {params:{id:string}})
               <span className="text-muted-foreground">
                 Full Name
               </span>
-              <span>{cardiologDetail.full_name}</span>
+              <span>{cardiologistDetail.full_name}</span>
             </li>
           </ul>
         <Separator className="my-2" />
         <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Phone Number</span>
-              <span>{ cardiologDetail.phone_num == null ? '-' : cardiologDetail.phone_num+''}</span>
+              <span>{ cardiologistDetail.phone_num == null ? '-' : cardiologistDetail.phone_num+''}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Email</span>
-              <span>{cardiologDetail.email}</span>
+              <span>{cardiologistDetail.email}</span>
             </li>
           </ul>
         </div>

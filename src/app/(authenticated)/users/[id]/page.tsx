@@ -58,20 +58,7 @@ export default async function UserDetail({params}: {params:{id:string}}) {
           <CardDescription>Last modified: {new Date(userDetail.modified_at).toDateString()}</CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
-          {/* <Button size="sm" variant="outline" className="h-8 gap-1">
-            <Truck className="h-3.5 w-3.5" />
-            <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-              Something
-            </span>
-          </Button> */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="outline" className="h-8 w-8">
-                <MoreVertical className="h-3.5 w-3.5" />
-                <span className="sr-only">More</span>
-              </Button>
-            </DropdownMenuTrigger>
-          </DropdownMenu>
+          
             <EditDialog
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Edit</Button>}
             user={userDetail}
