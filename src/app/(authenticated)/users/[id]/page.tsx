@@ -72,7 +72,7 @@ export default async function UserDetail({params}: {params:{id:string}}) {
                 <span className="sr-only">More</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-10" align="end">
+            <DropdownMenuContent onSelect={(e)=>e.preventDefault()} className="w-10" align="end">
             
             <DropdownMenuItem>
             <EditDialog
