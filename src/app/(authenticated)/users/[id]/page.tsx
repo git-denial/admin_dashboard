@@ -16,6 +16,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -73,22 +74,32 @@ export default async function UserDetail({params}: {params:{id:string}}) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-10" align="end">
             
-              
-            </DropdownMenuContent>
-          </DropdownMenu>
+            <DropdownMenuItem>
             <EditDialog
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Edit</Button>}
             user={userDetail}
             />
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
             <ChangePasswordDialog 
             child={<Button className="w-full text-[12px] border-primary" variant={'ghost'}>Change password</Button>}
             user={userDetail}
             />
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
             <DeleteUserDialog
             child={<Button className="w-full text-[12px] border-primary hover:bg-destructive hover:text-white" variant={'ghost'}>Delete</Button>}
             text={{head:"Are you sure?", body:"You are about to delete this user"}}
             id={userDetail.id}            
             />
+            </DropdownMenuItem>
+            
+              
+            </DropdownMenuContent>
+          </DropdownMenu>
+
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">

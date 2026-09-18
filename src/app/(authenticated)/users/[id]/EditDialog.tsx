@@ -84,7 +84,6 @@ export default function EditDialog({ child, user }: { child: React.ReactNode; us
       <DialogContent 
         className="sm:max-w-[525px] pointer-events-auto"
         onOpenAutoFocus={(e) => {
-          // Prevents Radix FocusTrap from breaking input pointer events on open
           e.preventDefault()
         }}
       >
